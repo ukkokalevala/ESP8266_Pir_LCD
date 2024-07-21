@@ -1,0 +1,27 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+#define PIR_PIN D5
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);  // Adjust the I2C address based on your LCD module
+
+void setup() {
+  pinMode(PIR_PIN, INPUT);
+  lcd.init();            // Initialize the LCD
+  lcd.backlight();       // Turn on the backlight
+  lcd.setCursor(0, 0);
+  lcd.print("PIR Sensor Init");
+  delay(2000);
+  lcd.clear();
+}
+
+void loop() {
+  int pirState = digitalRead(PIR_PIN);
+  lcd.setCursor(0, 0);
+  if (pirState == HIGH) {
+    lcd.print("Motion Detected");
+  } else {
+    lcd.print("No Motion      ");
+  }
+  delay(1000);
+}
